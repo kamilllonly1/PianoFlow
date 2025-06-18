@@ -1,0 +1,17 @@
+@{
+    ViewData["Title"] = "Итоговый экзамен";
+}
+<h2>Итоговый экзамен</h2>
+@if ((bool)ViewBag.Allowed)
+{
+    <p>Вы выполнили @ViewBag.Percent% упражнений. Можно приступить к экзамену.</p>
+    <a asp-action="Start" class="btn btn-success">Начать экзамен</a>
+}
+else
+{
+    <div class="alert alert-warning">
+        Для допуска к экзамену необходимо выполнить не менее 80% упражнений.<br />
+        Ваш прогресс: @ViewBag.Percent%
+    </div>
+    <a asp-controller="Progress" asp-action="Index" class="btn btn-secondary">Посмотреть прогресс</a>
+} 

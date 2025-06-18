@@ -1,0 +1,35 @@
+@model PianoFlow.Models.Exercise
+@{
+    ViewData["Title"] = "Выполнение упражнения";
+    var options = ViewBag.Options as string[];
+}
+<h2>Вопрос</h2>
+<p>@Html.Raw(Model.Question)</p>
+@if (ViewBag.Result != null)
+{
+    <div class="alert @(ViewBag.Result.Contains("Верно") ? "alert-success" : "alert-danger")">
+        @ViewBag.Result
+    </div>
+}
+@if (!string.IsNullOrEmpty(Model.AudioPath))
+{
+    <audio controls class="mb-3">
+        <source src="@Model.AudioPath" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио.
+    </audio>
+}
+<form asp-action="Do" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    @if (options != null)
+    {
+        foreach (var opt in options)
+        {
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="selectedOption" value="@opt" id="opt_@opt" required />
+                <label class="form-check-label" for="opt_@opt">@opt</label>
+            </div>
+        }
+    }
+    <button type="submit" class="btn btn-success mt-2">Ответить</button>
+</form>
+<a asp-action="Index" asp-route-lessonId="@Model.LessonId" class="btn btn-secondary mt-3">Назад к упражнениям</a> 

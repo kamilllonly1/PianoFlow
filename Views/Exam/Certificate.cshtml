@@ -1,0 +1,16 @@
+@model PianoFlow.Models.Certificate
+@{
+    ViewData["Title"] = "Сертификат о прохождении курса";
+}
+<div style="max-width:600px;margin:40px auto;padding:32px;border:4px double #007bff;border-radius:24px;background:#f9f9ff;text-align:center;box-shadow:0 2px 16px #007bff22;">
+    <h2 style="color:#007bff;">Сертификат</h2>
+    <p style="font-size:1.2em;">Настоящий сертификат подтверждает, что</p>
+    <h3 style="margin:16px 0;">@Model.User?.Email</h3>
+    <p>успешно прошёл(а) итоговый экзамен по курсу <b>"PianoFlow: основы нот и клавиш фортепиано"</b>.</p>
+    <p style="margin:24px 0 8px 0;">Дата: <b>@Model.DateIssued.ToString("dd.MM.yyyy")</b></p>
+    <p>Баллы за экзамен: <b>@Model.Exam?.Points</b></p>
+    <p style="margin:24px 0 8px 0;">Код сертификата: <b>@Model.CertificateCode</b></p>
+    <hr style="margin:32px 0;" />
+    <div style="font-size:1.1em;color:#333;">Поздравляем с успешным завершением курса и желаем дальнейших успехов в обучении музыке!</div>
+    <div style="margin-top:32px;color:#888;font-size:0.9em;">PianoFlow, @DateTime.Now.Year</div>
+</div> 

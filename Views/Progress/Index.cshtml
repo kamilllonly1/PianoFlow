@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "Мой прогресс";
+}
+<h2>Мой прогресс</h2>
+<div class="card mt-3" style="max-width: 400px;">
+    <div class="card-body">
+        <p><b>Выполнено упражнений:</b> @ViewBag.Completed из @ViewBag.Total</p>
+        <p><b>Баллы:</b> @ViewBag.Points</p>
+        <p><b>Завершено курса:</b> @ViewBag.Percent.ToString("0.##")%</p>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: @ViewBag.Percent%" aria-valuenow="@ViewBag.Percent" aria-valuemin="0" aria-valuemax="100">@ViewBag.Percent.ToString("0")%</div>
+        </div>
+    </div>
+</div> 

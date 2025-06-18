@@ -1,0 +1,19 @@
+@model IEnumerable<PianoFlow.Models.Lesson>
+@{
+    ViewData["Title"] = "Урок";
+    var lesson = Model.FirstOrDefault();
+}
+@if (lesson != null)
+{
+    <div class="card mt-4 mb-4">
+        <div class="card-body">
+            <h3 class="card-title">@lesson.Title</h3>
+            <p class="card-text">@Html.Raw(lesson.Content)</p>
+            <a asp-action="Details" asp-route-id="@lesson.Id" class="btn btn-primary">Перейти к уроку</a>
+        </div>
+    </div>
+}
+else
+{
+    <p>Уроков пока нет.</p>
+} 

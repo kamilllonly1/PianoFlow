@@ -1,0 +1,48 @@
+@model PianoFlow.Models.Lesson
+@{
+    ViewData["Title"] = "Урок: " + Model.Title;
+}
+<h2>@Model.Title</h2>
+<p><b>Тип:</b> @Model.LessonType?.Name</p>
+<div>
+    <h4>Содержание</h4>
+    <div>@Html.Raw(Model.Content)</div>
+</div>
+<hr />
+<h4>Комментарии</h4>
+@using Microsoft.EntityFrameworkCore
+@{
+    var comments = Context.RequestServices.GetService(typeof(PianoFlow.Models.ApplicationDbContext)) as PianoFlow.Models.ApplicationDbContext;
+    var lessonComments = comments.Comments.Where(c => c.LessonId == Model.Id).OrderByDescending(c => c.Id).ToList();
+}
+@if (lessonComments.Count == 0)
+{
+    <p>Комментариев пока нет.</p>
+}
+else
+{
+    <ul class="list-group mb-3">
+        @foreach (var c in lessonComments)
+        {
+            <li class="list-group-item">
+                <b>@comments.Users.FirstOrDefault(u => u.Id == c.UserId)?.Email:</b> @c.Text
+            </li>
+        }
+    </ul>
+}
+@if (User.Identity.IsAuthenticated)
+{
+    <form asp-controller="Comments" asp-action="Add" method="post" class="mb-3">
+        <input type="hidden" name="lessonId" value="@Model.Id" />
+        <div class="mb-2">
+            <textarea name="text" class="form-control" rows="2" placeholder="Оставьте комментарий..."></textarea>
+        </div>
+        @if (TempData["CommentError"] != null)
+        {
+            <div class="text-danger">@TempData["CommentError"]</div>
+        }
+        <button type="submit" class="btn btn-outline-primary">Добавить комментарий</button>
+    </form>
+}
+<a asp-controller="Exercises" asp-action="Index" asp-route-lessonId="@Model.Id" class="btn btn-primary mt-3">Перейти к упражнениям</a>
+<a asp-action="Index" class="btn btn-secondary mt-3">Назад к списку</a> 

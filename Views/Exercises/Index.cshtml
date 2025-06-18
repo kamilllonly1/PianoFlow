@@ -1,0 +1,27 @@
+@model IEnumerable<PianoFlow.Models.Exercise>
+@{
+    ViewData["Title"] = "Упражнения";
+}
+<h2>Упражнения по уроку: @ViewBag.LessonTitle</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Вопрос</th>
+            <th>Тип</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var exercise in Model)
+    {
+        <tr>
+            <td>@Html.Raw(exercise.Question)</td>
+            <td>@(string.IsNullOrEmpty(exercise.AudioPath) ? "Картинка" : "Аудио")</td>
+            <td>
+                <a asp-action="Do" asp-route-id="@exercise.Id" class="btn btn-primary btn-sm">Выполнить</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a asp-controller="Lessons" asp-action="Index" class="btn btn-secondary mt-3">Назад к урокам</a> 

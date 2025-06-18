@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "Результат экзамена";
+}
+<h2>Результат экзамена</h2>
+@if (ViewBag.Score != null && ViewBag.Total != null)
+{
+    <div class="alert @(ViewBag.Score >= (int)ViewBag.Total * 0.6 ? "alert-success" : "alert-danger")">
+        Вы набрали @ViewBag.Score из @ViewBag.Total баллов.<br />
+        @(ViewBag.Score >= (int)ViewBag.Total * 0.6 ? "Экзамен сдан!" : "Экзамен не сдан.")
+    </div>
+    @if (ViewBag.Score >= (int)ViewBag.Total * 0.6 && ViewBag.CertificateId != null)
+    {
+        <a asp-action="Certificate" asp-route-id="@ViewBag.CertificateId" class="btn btn-success">Скачать сертификат</a>
+    }
+}
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">На главную</a> 
